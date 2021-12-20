@@ -6,7 +6,9 @@ import common.Task;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /*
@@ -21,7 +23,12 @@ public class Task1 implements Task {
   // !!! Редактируйте этот метод !!!
   private List<Person> findOrderedPersons(List<Integer> personIds) {
     Set<Person> persons = PersonService.findPersons(personIds);
-    return Collections.emptyList();
+    Map<Integer, Person> idPerson = persons.stream()
+            .collect(Collectors.toMap(Person::getId, Function.identity()));
+
+    return personIds.stream()
+            .map(idPerson::get)
+            .toList(); // Сейчас по идее должно получится O(n)
   }
 
   @Override
