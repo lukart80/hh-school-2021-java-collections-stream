@@ -5,6 +5,7 @@ import common.PersonService;
 import common.Task;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /*
@@ -18,16 +19,13 @@ public class Task1 implements Task {
 
   // !!! Редактируйте этот метод !!!
   private List<Person> findOrderedPersons(List<Integer> personIds) {
+    Set<Person> persons = PersonService.findPersons(personIds);
+    Map<Integer, Person> idPerson = persons.stream()
+            .collect(Collectors.toMap(Person::getId, Function.identity()));
 
-
-    Set<Person> persons = PersonService.findPersons(personIds); // Сделаем словарь id -> позиция персоны
-    Map<Integer, Integer> personPos = new HashMap<>();
-    for (int i = 0; i < personIds.size(); i++) {
-      personPos.put(personIds.get(i), i);
-    }
-
-    return persons.stream().sorted(
-            Comparator.comparingInt(p -> personPos.get(p.getId()))).toList(); // Сложность будет O(nlog)
+    return personIds.stream()
+            .map(idPerson::get)
+            .toList(); // Сейчас по идее должно получится O(n)
   }
 
 

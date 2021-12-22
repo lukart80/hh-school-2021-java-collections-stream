@@ -26,15 +26,10 @@ public class Task6 implements Task {
 
     return persons.stream()
             .flatMap(
-                    p -> personAreaIds.get(p.getId()).stream()
-                            .map(areaId -> makeResultString(p.getFirstName(), areaName.get(areaId))))
+                    person -> personAreaIds.get(person.getId()).stream()
+                            .map(areaId -> person.getFirstName() + " - " + areaName.get(areaId)))
             .collect(Collectors.toSet());
   }
-
-  private String makeResultString(String name, String area) {
-    return name + " - " + area;
-  }
-
 
   @Override
   public boolean check() {
