@@ -25,7 +25,7 @@ public class Task8 implements Task {
     if (persons.size() == 0) {
       return Collections.emptyList();
     }
-    persons.remove(0);
+
     return persons.stream()
             .skip(1) // Скипаем первую персону
             .filter(Objects::nonNull) // И проверяем что остальные персоны не null
